@@ -1,0 +1,10 @@
+A tool for working with Forth screen files.
+
+scr converts standard 16x64 Forth screens to (and from) a "mostly plain text"
+source code format which can be displayed or modified using common *nix tools.
+
+A line of code can contain at most 64 characters and is followed by a newline.
+
+Spaces should be used for indenting code.
+
+ISC License :-) Enjoy!
