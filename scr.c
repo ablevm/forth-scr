@@ -8,7 +8,7 @@ extern char *__progname;
 
 void
 usage() {
-	fprintf(stderr, "usage: %s [-hrns] [-b base] [infile [outfile]]\n", __progname);
+	fprintf(stderr, "usage: %s [-hrls] [-b base] [infile [outfile]]\n", __progname);
 	exit(1);
 }
 
@@ -16,8 +16,8 @@ int
 main(int argc, char *argv[]) {
 	int ropt;
 	ropt = 0;
-	int nopt;
-	nopt = 0;
+	int lopt;
+	lopt = 0;
 	int sopt;
 	sopt = 0;
 	int bopt;
@@ -34,17 +34,17 @@ main(int argc, char *argv[]) {
 	ofp = stdout;
 
 	char ch;
-	while ((ch = getopt(argc, argv, "hrnsb:")) != -1) {
+	while ((ch = getopt(argc, argv, "hrlsb:")) != -1) {
 		switch (ch) {
 			case 'r':
 				if (ropt != 0)
 					usage();
 				ropt = 1;
 				break;
-			case 'n':
-				if (nopt != 0)
+			case 'l':
+				if (lopt != 0)
 					usage();
-				nopt = 3;
+				lopt = 3;
 				break;
 			case 's':
 				if (sopt != 0)
@@ -108,9 +108,9 @@ main(int argc, char *argv[]) {
 	};
 
 	int ls;
-	ls = 0 + nopt;
+	ls = 0 + lopt;
 	int le;
-	le = 64 + nopt;
+	le = 64 + lopt;
 
 	int sn;
 	sn = boptarg;
