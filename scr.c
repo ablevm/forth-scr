@@ -176,7 +176,6 @@ main(int argc, char *argv[]) {
 			char s[17][67];
 			int d;
 			d = 0;
-			int c;
 			for (i = 0; i < 16 + sopt; i++) {
 				for (j = 0; j < le; j++)
 					s[i][j] = ' ';
