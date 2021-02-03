@@ -1,10 +1,60 @@
-A tool for working with Forth screen files.
+scr
 
-scr converts standard 16x64 Forth screens to (and from) a "mostly plain text"
-source code format which can be displayed or modified using common *nix tools.
+A tool for working with Forth code blocks.
 
-A line of code can contain at most 64 characters and is followed by a newline.
+scr converts 1024-byte Forth code blocks to (and from) a plain-text source code
+format modeled on the 16x64 screen format and designed for reading and writing
+using common software.
+
+A screen contains 16 lines of code and each line of code can contain at most 64
+characters followed by a newline character.
+
+Screens may optionally include line numbers and screen numbers.
 
 Spaces should be used for indenting code.
 
-ISC License :-) Enjoy!
+GETTING STARTED
+
+Building and installing
+
+$ make install
+...
+$ 
+
+Examples
+
+To convert a block file to a screen file:
+
+The -l and -s options specify that line numbers and screen numbers are expected
+in the output (or input).
+
+$ scr -ls example.blk example.scr
+$ 
+
+To convert a screen file to a block file:
+
+The -r option specifies that the input is in screen format and the output should
+be in block format.
+
+$ scr -rls example.scr example.blk
+$ 
+
+To display a block file in screen format with OPTIONS:
+
+If no output file is specified scr will write to stdout.
+
+$ scr OPTIONS example.blk
+...
+$ 
+
+To reformat and display a screen file with OPTIONS:
+
+If no input file is specified scr will read from stdin.
+
+$ scr -rls example.scr | scr OPTIONS
+...
+$ 
+
+LICENSE
+
+ISC-style license
