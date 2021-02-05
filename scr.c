@@ -71,16 +71,20 @@ main(int argc, char *argv[]) {
 	}
 
 	if (argc >= 1) {
-		ifn = argv[0];
-		ifp = fopen(ifn, "r");
-		if (ifp == NULL)
-			err(1, "%s", ifn);
+		if (strcmp(argv[0], "-") != 0) {
+			ifn = argv[0];
+			ifp = fopen(ifn, "r");
+			if (ifp == NULL)
+				err(1, "%s", ifn);
+		}
 	}
 	if (argc >= 2) {
-		ofn = argv[1];
-		ofp = fopen(ofn, "w");
-		if (ofp == NULL)
-			err(1, "%s", ofn);
+		if (strcmp(argv[1], "-") != 0) {
+			ofn = argv[1];
+			ofp = fopen(ofn, "w");
+			if (ofp == NULL)
+				err(1, "%s", ofn);
+		}
 	}
 
 #ifdef __OpenBSD__
