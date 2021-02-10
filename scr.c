@@ -142,7 +142,7 @@ main(int argc, char *argv[]) {
 						break;
 					}
 					cc++;
-					if ((char)c < 31) {
+					if ((char)c < 32 || (char)c > 126) {
 						if (ifn != NULL)
 							fprintf(stderr, "%s:", ifn);
 						fprintf(stderr, "#%d: invalid character\n", cc);
@@ -198,7 +198,7 @@ main(int argc, char *argv[]) {
 						fprintf(stderr, "%d: line is too long\n", lc);
 						exit(2);
 					}
-					if ((char)c < 31) {
+					if ((char)c < 32 || (char)c > 126) {
 						if (ifn != NULL)
 							fprintf(stderr, "%s:", ifn);
 						fprintf(stderr, "%d: invalid character\n", lc);
