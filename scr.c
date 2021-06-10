@@ -8,7 +8,7 @@ extern char *__progname;
 
 void
 usage() {
-	fprintf(stderr, "usage: %s [-hrls] [-b base] [infile [outfile]]\n", __progname);
+	fprintf(stderr, "usage: %s [-hrnls] [-b base] [infile [outfile]]\n", __progname);
 	exit(1);
 }
 
@@ -16,6 +16,8 @@ int
 main(int argc, char *argv[]) {
 	int ropt;
 	ropt = 0;
+	int nopt;
+	nopt = 0;
 	int lopt;
 	lopt = 0;
 	int sopt;
@@ -34,12 +36,17 @@ main(int argc, char *argv[]) {
 	ofp = stdout;
 
 	char ch;
-	while ((ch = getopt(argc, argv, "hrlsb:")) != -1) {
+	while ((ch = getopt(argc, argv, "hrnlsb:")) != -1) {
 		switch (ch) {
 			case 'r':
 				if (ropt != 0)
 					usage();
 				ropt = 1;
+				break;
+			case 'n':
+				if (nopt != 0)
+					usage();
+				nopt = 1;
 				break;
 			case 'l':
 				if (lopt != 0)
@@ -142,16 +149,18 @@ main(int argc, char *argv[]) {
 						break;
 					}
 					cc++;
+					if (nopt && (char)c == '\n')
+						c = ' ';
+					if ((char)c != ' ')
+						k = j + 1;
+					s[i][j] = (char)c;
+					d = 1;
 					if ((char)c < 32 || (char)c > 126) {
 						if (ifn != NULL)
 							fprintf(stderr, "%s:", ifn);
 						fprintf(stderr, "#%d: invalid character\n", cc);
 						exit(2);
 					}
-					if ((char)c != ' ')
-						k = j + 1;
-					s[i][j] = (char)c;
-					d = 1;
 				}
 				s[i][k] = '\0';
 			}
@@ -190,7 +199,7 @@ main(int argc, char *argv[]) {
 						q = 1;
 						break;
 					}
-					if ((char)c == '\n')
+					if (!nopt && (char)c == '\n')
 						break;
 					if (j == le) {
 						if (ifn != NULL)
@@ -198,16 +207,16 @@ main(int argc, char *argv[]) {
 						fprintf(stderr, "%d: line is too long\n", lc);
 						exit(2);
 					}
+					s[i][j] = (char)c;
+					d = 1;
+					if ((char)c == '\n')
+						break;
 					if ((char)c < 32 || (char)c > 126) {
 						if (ifn != NULL)
 							fprintf(stderr, "%s:", ifn);
 						fprintf(stderr, "%d: invalid character\n", lc);
 						exit(2);
 					}
-					if (i == -1)
-						continue;
-					s[i][j] = (char)c;
-					d = 1;
 				}
 				lc++;
 			}

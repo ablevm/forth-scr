@@ -25,8 +25,8 @@ Examples
 
 To convert a block file to a screen file:
 
-The -l and -s options specify that line numbers and screen numbers are expected
-in the output (or input).
+The -n, -l and -s options specify whether newline characters, line numbers or
+screen numbers (respectively) are included.
 
 $ scr -ls example.blk example.scr
 $ 
