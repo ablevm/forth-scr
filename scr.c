@@ -119,7 +119,7 @@ main(int argc, char *argv[]) {
 	int sn;
 	sn = boptarg;
 
-	if (ropt == 0) {
+	if (!ropt) {
 		int cc;
 		cc = 0;
 		int q;
@@ -162,7 +162,7 @@ main(int argc, char *argv[]) {
 				exit(2);
 			}
 			if (!q || d) {
-				if (sopt == 1)
+				if (sopt)
 					fprintf(ofp, "   SCREEN %d\n", sn++);
 				for (i = 0; i < 16; i++) {
 					fputs(s[i], ofp);
