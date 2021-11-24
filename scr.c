@@ -12,6 +12,24 @@ usage() {
 	exit(1);
 }
 
+void
+dashes (FILE *ofp, int sn)
+{
+	int i, n;
+	n = 64 - 3 - 1 - 6 - 1; /* Three dashes, one space, SCREEN, one space. */
+	if (n < 10)
+		n--;
+	else if (n < 100)
+		n -= 2;
+	else if (n < 1000)
+		n -= 3;
+	else /* Infinite number! */
+		n -= 4;
+	for(i = 0; i < n; i++)
+		fputc('-', ofp);
+	fputc('\n', ofp);
+}
+
 int
 main(int argc, char *argv[]) {
 	int ropt;
@@ -171,8 +189,11 @@ main(int argc, char *argv[]) {
 				exit(2);
 			}
 			if (!q || d) {
-				if (sopt)
-					fprintf(ofp, "   SCREEN %d\n", sn++);
+				if (sopt) {
+					fprintf(ofp, "   --- SCREEN %d ", sn);
+					dashes (ofp, sn);
+					sn++;
+				}
 				for (i = 0; i < 16; i++) {
 					fputs(s[i], ofp);
 					fputc('\n', ofp);
