@@ -31,6 +31,8 @@ screen numbers (respectively) are included.
 $ scr -ls example.blk example.scr
 $ 
 
+The -d option specifies whether the screen divider (dashed line) is included.
+
 To convert a screen file to a block file:
 
 The -r option specifies that the input is in screen format and the output should

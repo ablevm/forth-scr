@@ -8,7 +8,7 @@ extern char *__progname;
 
 void
 usage() {
-	fprintf(stderr, "usage: %s [-hrnls] [-b base] [infile [outfile]]\n", __progname);
+	fprintf(stderr, "usage: %s [-hrnlsd] [-b base] [infile [outfile]]\n", __progname);
 	exit(1);
 }
 
@@ -22,6 +22,8 @@ main(int argc, char *argv[]) {
 	lopt = 0;
 	int sopt;
 	sopt = 0;
+	int dopt;
+	dopt = 0;
 	int bopt;
 	bopt = 0;
 	int boptarg;
@@ -36,7 +38,7 @@ main(int argc, char *argv[]) {
 	ofp = stdout;
 
 	char ch;
-	while ((ch = getopt(argc, argv, "hrnlsb:")) != -1) {
+	while ((ch = getopt(argc, argv, "hrnlsdb:")) != -1) {
 		switch (ch) {
 			case 'r':
 				if (ropt != 0)
@@ -57,6 +59,11 @@ main(int argc, char *argv[]) {
 				if (sopt != 0)
 					usage();
 				sopt = 1;
+				break;
+			case 'd':
+				if (dopt != 0)
+					usage();
+				dopt = 1;
 				break;
 			case 'b':
 				if (bopt != 0)
@@ -171,8 +178,33 @@ main(int argc, char *argv[]) {
 				exit(2);
 			}
 			if (!q || d) {
-				if (sopt)
-					fprintf(ofp, "   SCREEN %d\n", sn++);
+				if (sopt || dopt) {
+					if (lopt || (sopt && !dopt))
+						for (i = 0; i < 3; i++)
+							fputc(' ', ofp);
+					int n;
+					n = 0;
+					if (dopt) {
+						for (i = 0; i < 3; i++)
+							fputc('-', ofp);
+						n += 3;
+					}
+					if (sopt) {
+						if (dopt) {
+							fputc(' ', ofp);
+							n++;
+						}
+						n += fprintf(ofp, "SCREEN %d", sn++);
+						if (dopt) {
+							fputc(' ', ofp);
+							n++;
+						}
+					}
+					if (dopt)
+						for (i = n; i < 64; i++)
+							fputc('-', ofp);
+					fputc('\n', ofp);
+				}
 				for (i = 0; i < 16; i++) {
 					fputs(s[i], ofp);
 					fputc('\n', ofp);
