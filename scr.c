@@ -101,11 +101,6 @@ main(int argc, char *argv[]) {
 		}
 	}
 
-#ifdef __OpenBSD__
-	if (pledge("stdio", NULL) == -1)
-		err(1, "pledge");
-#endif
-
 	const char ln[16][3] = {
 		" 0 ",
 		" 1 ",
